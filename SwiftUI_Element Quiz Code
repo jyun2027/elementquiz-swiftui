@@ -1,0 +1,67 @@
+//
+//  ContentView.swift
+//  ElementQuiz
+//
+//  Created by amy hong on 4/27/26.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    
+    // MARK: - State
+    
+    // Replaces currentElementIndex
+    // When this changes → UI updates automatically
+    @State private var currentElementIndex = 0
+    
+    // Controls whether the answer is shown
+    @State private var showAnswer = false
+    
+    // Your data (same as UIKit)
+    let elementList = ["Carbon", "Gold", "Chlorine", "Sodium"]
+    
+    // MARK: - Body
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            
+            // Image (replaces UIImageView)
+            Image(elementList[currentElementIndex])
+                .resizable()
+                .scaledToFit()
+                .frame(height: 200)
+            
+            // Label (replaces UILabel)
+            // Conditional rendering instead of manually setting text
+            Text(showAnswer ? elementList[currentElementIndex] : "?")
+                .font(.largeTitle)
+            
+            // Show Answer Button (replaces IBAction)
+            Button("Show Answer") {
+                showAnswer = true
+            }
+            
+            // Next Button
+            Button("Next") {
+                nextElement()
+            }
+        }
+        .padding()
+    }
+    
+    // MARK: - Logic
+    
+    func nextElement() {
+        // Cycle through elements safely
+        currentElementIndex = (currentElementIndex + 1) % elementList.count
+        
+        // Reset answer visibility
+        showAnswer = false
+    }
+}
+
+
+#Preview {
+    ContentView()
+}
